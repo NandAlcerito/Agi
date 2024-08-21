@@ -27,3 +27,17 @@ Verificar se a paginação ou listagem dos artigos na página reflete essa orden
 ├── package.json               # Dependências do projeto e scripts
 ├── README.md                  # Documentação do projeto
 └── cypress.json               # Configurações específicas do Cypress
+
+
+
+Cenário 2
+
+
+Ao buscar pela palavra "contato", o primeiro resultado  deve redirecionar o usuário para o link correto https://agibank.com.br
+
+Cenário de Teste
+Realizar uma busca pelo termo "contato".
+Verificar se o primeiro resultado da busca contém o link correto.
+Clicar no primeiro resultado e verificar se o redirecionamento acontece para o link especificado.
+
+
