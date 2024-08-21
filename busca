@@ -1,0 +1,31 @@
+// cypress/integration/busca_artigos.spec.js
+
+describe('Busca de Artigos no Blog', () => {
+    it('Verifica se os artigos estão organizados por data decrescente', () => {
+        // Passo 1: Acessar a página principal do site (substitua pela URL do seu site)
+        cy.visit('https://blogdoagi.com.br');
+
+        // Passo 2: Realizar a busca
+        cy.get('input[type="search"]') // Selecione o campo de pesquisa
+            .type('valor')             // Digita o texto da busca
+            .type('{enter}');          // Pressiona a tecla Enter
+
+        // Passo 3: Coletar as datas de publicação
+        cy.get('.post') // Altere o seletor para corresponder aos seus artigos
+            .then($articles => {
+                // Cria uma lista para armazenar as datas
+                const dates = [];
+                // Percorre cada artigo para coletar as datas
+                $articles.each((index, article) => {
+                    const dateText = Cypress.$(article).find('.published').text().trim(); // Altere o seletor conforme necessário
+                    // Converte a data para um objeto Date
+                    const dateParts = dateText.split('/').reverse(); // Se a data for "dd/mm/yyyy"
+                    const date = new Date(dateParts.join('-'));
+                    dates.push(date);
+                });
+                // Passo 4: Verifica se as datas estão em ordem decrescente
+                const sortedDates = [...dates].sort((a, b) => b - a); // Ordena as datas em ordem decrescente
+                expect(dates).to.deep.equal(sortedDates); // Compara se as duas listas de datas são iguais
+            });
+    });
+});
